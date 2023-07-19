@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:oauth_oidc_serverless_application/helper/constants.dart';
+import 'package:oauth_oidc_serverless_application/services/auth_service.dart';
 
 void main() {
   runApp(const MyApp());
@@ -40,6 +41,16 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  Future<void> loginAsync() async {
+    await AuthService.instance.login();
+  }
+
+  @override
+  void initState() {
+    initApp();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,10 +73,19 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
+        onPressed: loginAsync,
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ),
     );
+  }
+
+  initApp() async {
+    final bool isAuth = await AuthService.instance.init();
+    if (isAuth) {
+      return 'hihi';
+    }
+
+    return 'huhu';
   }
 }
