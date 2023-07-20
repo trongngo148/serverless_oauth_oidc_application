@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:oauth_oidc_serverless_application/helper/constants.dart';
+import 'package:oauth_oidc_serverless_application/services/app_router.dart';
 import 'package:oauth_oidc_serverless_application/services/auth_service.dart';
 
 void main() {
@@ -11,14 +12,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(AUTH0_DOMAIN);
-    return MaterialApp(
+    final _autoRouter = AppRouter();
+
+    return MaterialApp.router(
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      routerConfig: _autoRouter.config(),
     );
   }
 }
